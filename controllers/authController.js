@@ -1,6 +1,9 @@
 const Auth = require('../models/authModel');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
+const generateToken = require('../utils/util');
+
+
 
 const registerUser = async (req, res) => {
     try {
@@ -33,6 +36,8 @@ const registerUser = async (req, res) => {
             res.status(201).json({
                 message: 'User created successfully',
                 newUser,
+               
+                
                 
             });
         } else {
@@ -45,6 +50,33 @@ const registerUser = async (req, res) => {
     }
 };
 
+const loginUser = async(req, res)=> {
+    try{
+        const {email, password} = req.body;
+
+        //check for the email
+        const user = await Auth.findOne({email})
+
+        if(user && (await bcrypt.compare(password, user.password))){
+            res.status(200).json({
+                message: 'User logged in successully',
+                token:generateToken(user._id)
+            })
+
+        }else {
+            res.status(401)
+            throw new Error('Invalid email or password')
+        }
+
+    }catch(error){
+        console.log(error)
+    }
+
+}
+
+
+
 module.exports = {
     registerUser,
+    loginUser
 };
