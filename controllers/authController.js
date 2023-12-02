@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
         const hashedpassword = await bcrypt.hash(password, salt)
 
         const newUser = await Auth.create({
-            _id: uuidv4(), // Generate a UUID for the _id field
+            // _id: uuidv4(), // Generate a UUID for the _id field
             name,
             email,
             password:hashedpassword,

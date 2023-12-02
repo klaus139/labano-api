@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const authSchema = mongoose.Schema({
-    _id:{
-        type:String,
-    },
+    // _id:{
+    //     type:String,
+    // },
     name:{
         type:String,
         //required:[true, 'Please add your name'],
